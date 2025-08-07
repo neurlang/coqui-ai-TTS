@@ -81,7 +81,7 @@ dependencies = [
     # Gruut + supported languages
     "gruut[de,es,fr]>=2.4.0",
     # PyGoruut
-    "pygoruut>=0.6.3",
+    "pygoruut>=0.6.5",
     # Tortoise
     "einops>=0.6.0",
     "transformers>=4.52.1",
