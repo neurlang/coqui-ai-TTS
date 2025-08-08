@@ -1204,14 +1204,17 @@ class Vits(BaseTTS):
         test_sentences = self.config.test_sentences
         for idx, s_info in enumerate(test_sentences):
             aux_inputs = self.get_aux_input_from_test_sentences(s_info)
-            outputs = self.synthesize(
-                aux_inputs["text"],
-                speaker=aux_inputs.get("speaker", None),
-                language=aux_inputs.get("language", None),
-                use_griffin_lim=True,
-            )
-            test_audios[f"{idx}-audio"] = outputs["wav"]
-            test_figures[f"{idx}-alignment"] = plot_alignment(outputs["alignments"].permute(2, 1, 0), output_fig=False)
+            try:
+                outputs = self.synthesize(
+                    aux_inputs["text"],
+                    speaker=aux_inputs.get("speaker", None),
+                    language=aux_inputs.get("language", None),
+                    use_griffin_lim=True,
+                )
+                test_audios[f"{idx}-audio"] = outputs["wav"]
+                test_figures[f"{idx}-alignment"] = plot_alignment(outputs["alignments"].permute(2, 1, 0), output_fig=False)
+            except:
+                print("test figures glitched")
         return {"figures": test_figures, "audios": test_audios}
 
     def format_batch(self, batch: dict) -> dict:
