@@ -34,7 +34,8 @@ _pulmonic_consonants = "pbtdʈɖcɟkɡqɢʔɴŋɲɳnɱmʙrʀⱱɾɽɸβfvθðsz�
 _suprasegmentals = "ˈˌːˑ"
 _other_symbols = "ʍwɥʜʢʡɕʑɺɧʲ"
 _diacritics = "̃ɚ˞ɫ"
-_phonemes = _vowels + _non_pulmonic_consonants + _pulmonic_consonants + _suprasegmentals + _other_symbols + _diacritics
+_tonal = "˥˦˧˨˩"
+_phonemes = _vowels + _non_pulmonic_consonants + _pulmonic_consonants + _suprasegmentals + _other_symbols + _diacritics + _tonal
 
 
 class BaseVocabulary:
