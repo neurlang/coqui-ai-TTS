@@ -2,7 +2,7 @@ import importlib.metadata
 
 from TTS.utils.generic_utils import is_pytorch_at_least_2_4
 
-__version__ = importlib.metadata.version("coqui-tts-version")
+__version__ = importlib.metadata.version("coqui-tts-pygoruut")
 
 if "coqpit" in importlib.metadata.packages_distributions().get("coqpit", []):
     msg = (
