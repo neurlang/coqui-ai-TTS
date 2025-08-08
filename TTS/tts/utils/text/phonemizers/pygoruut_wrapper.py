@@ -101,7 +101,7 @@ class Pygoruut(BasePhonemizer):
         Returns:
             List: List of language codes.
         """
-        return PygoruutLanguages().get_supported_languages()
+        return PygoruutLanguages().get_all_supported_languages()
 
     def version(self):
         """Get the version of the used backend.
