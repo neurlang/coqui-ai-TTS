@@ -7,6 +7,10 @@ from pygoruut.pygoruut import Pygoruut, PygoruutLanguages
 from TTS.tts.utils.text.phonemizers.base import BasePhonemizer
 from TTS.tts.utils.text.punctuation import Punctuation
 
+# Table for str.translate to fix goruut/TTS phoneme mismatch
+# Although goruut consistently returns the ascii g, coqui needs the utf-8 g
+GORUUT_TRANS_TABLE = str.maketrans("g", "ɡ")
+
 class Pygoruut(BasePhonemizer):
     """Pygoruut (goruut) wrapper for G2P
 
@@ -21,7 +25,7 @@ class Pygoruut(BasePhonemizer):
             Unused.
 
         keep_puncs (bool):
-            Unsupported.
+            Supported. Keeps punctuations if true.
 
         use_espeak_phonemes (bool):
             Currently unsupported.
@@ -47,10 +51,7 @@ class Pygoruut(BasePhonemizer):
         keep_stress=False,
     ):
         super().__init__(language=language)
-        if punctuations is None:
-            self.punctuations = "\x00"
-        else:
-            self.punctuations = punctuations
+        self.punctuations = keep_puncs
         self.pygoruut = pygoruut.pygoruut.Pygoruut(version=version, writeable_bin_dir='')
 
     @staticmethod
@@ -75,13 +76,7 @@ class Pygoruut(BasePhonemizer):
         """
         if language is None:
             language = self.language
-        resp = self.pygoruut.phonemize(language=language, sentence=text)
-        ph_words = []
-        for word in resp.Words:
-            ph_words.append(word.Phonetic)
-
-        ph = f"{separator} ".join(ph_words)
-        return ph
+        return str(self.pygoruut.phonemize(language=language, sentence=text, separator=separator, is_punct=self.punctuations)).translate(GORUUT_TRANS_TABLE)
 
     def _phonemize(self, text, separator, language=None):
         return self.phonemize_goruut(text, separator, tie=False, language=language)
